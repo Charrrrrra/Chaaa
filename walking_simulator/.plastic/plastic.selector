@@ -1,0 +1,4 @@
+repository "walking_simulator@wechat_os_qy0yjz7mnkuny-c2ohqc7veme@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
