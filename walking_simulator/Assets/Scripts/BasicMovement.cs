@@ -18,12 +18,6 @@ public class BasicMovement : MonoBehaviour
 
     public bool can_move;
 
-    public bool isGround, isJump;
-
-    public bool jumpPressed;
-
-    public Vector2 V;
-
     public AudioSource jumpsound;
 
     void Start() {
@@ -46,34 +40,29 @@ public class BasicMovement : MonoBehaviour
         }
     }
 
-    void Jump() {
-        if (isGround) 
-            isJump = false;
-        else
-            isJump = true;
-
-        if(jumpPressed && isGround) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpPressed = false;
-            isGround = false;
-            jumpsound.Play();
-        }
-        
+    bool GroundCheck() {
         Vector2 boxCenter = (Vector2) transform.position + (Vector2.down * playerSize.y * 0.5f);
 
         if(Physics2D.OverlapBox(boxCenter, boxSize, 0, ground) != null)
-            isGround = true;
+            return true;
         else
-            isGround = false;
+            return false;
+    }
+
+    void Jump() {
+        if(GroundCheck()) {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpsound.Play();
+        }
     }
 
     void SwitchAnim() {
         anim.SetFloat("running", Mathf.Abs(rb.velocity.x));
 
-        if(isGround) {
+        if(GroundCheck()) {
             anim.SetBool("falling", false);
         }
-        else if (!isGround && rb.velocity.y > 0) {
+        else if (!GroundCheck() && rb.velocity.y > 0) {
             anim.SetBool("jumping", true);
         }
         else if (rb.velocity.y <0) {
@@ -84,18 +73,14 @@ public class BasicMovement : MonoBehaviour
     
     void Update() {
         
-        if (Input.GetButtonDown("Jump") && isGround) {
-            jumpPressed = true;
-        }
+        if (Input.GetButtonDown("Jump") && GroundCheck() && can_move) 
+            Jump();
 
         if (can_move) {
             GroundMovement();
-            Jump();
             SwitchAnim();
         }
         else
             anim.SetBool("walkout", true);
-
-        V = rb.velocity;
     }
 }
