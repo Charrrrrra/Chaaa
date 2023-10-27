@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class BasicMovement : MonoBehaviour
 {
@@ -17,8 +19,15 @@ public class BasicMovement : MonoBehaviour
     public float boxHeight = 0.5f;
 
     public bool can_move;
+    public TextMeshProUGUI switch_count_text;
+    public Transform UIposition;
+    Transform target;
+    Vector3 velocity = Vector3.zero;
+    private Vector3 offset = new Vector3(0.08f, 0.2f, 0f);
 
-    public AudioSource jumpsound;
+    private void Awake() {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -29,6 +38,11 @@ public class BasicMovement : MonoBehaviour
         can_move = true;
 
         transform.position = GameObject.Find("GeneratePoints").transform.position;
+        SetCountText();
+    }
+
+    void SetCountText() {
+        switch_count_text.text = "Switch Count:" + ISceneManager._instance.load_count.ToString();
     }
 
     void GroundMovement() {
@@ -52,7 +66,7 @@ public class BasicMovement : MonoBehaviour
     void Jump() {
         if(GroundCheck()) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpsound.Play();
+            AudioManager._instance.PlayJumpSound();
         }
     }
 
@@ -70,8 +84,17 @@ public class BasicMovement : MonoBehaviour
             anim.SetBool("falling", true);
         }
     }
+
+    private void PlayRight() {
+        AudioManager._instance.PlayRightSound();
+    }
     
+    private void PlayLeft() {
+        AudioManager._instance.PlayLeftSound();
+    }
     void Update() {
+        Vector3 targetPosition = target.position;
+        UIposition.position = targetPosition + offset;
         
         if (Input.GetButtonDown("Jump") && GroundCheck() && can_move) 
             Jump();

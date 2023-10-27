@@ -35,8 +35,7 @@ public class SceneLoadBack : MonoBehaviour
     }
 
     void LoadScene() {
-        Debug.Log("0.0");
-        SceneManager.LoadScene(0);
+        ISceneManager._instance.load_StartScene();
     }
 
     // Update is called once per frame

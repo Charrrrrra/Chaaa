@@ -38,8 +38,7 @@ public class SceneLoader : MonoBehaviour
     }
 
     void LoadScene() {
-        Debug.Log("0.0");
-        SceneManager.LoadScene(1);
+        ISceneManager._instance.load_Scene02();
     }
 
     // Update is called once per frame
