@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BasicMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     
     private Rigidbody2D rb;
@@ -25,8 +25,28 @@ public class BasicMovement : MonoBehaviour
     Vector3 velocity = Vector3.zero;
     private Vector3 offset = new Vector3(0.08f, 0.2f, 0f);
 
+
+
+
+    public StateController sc {get; set;}
+    public WalkState walking {get; set;}
+    public IdleState idling {get; set;}
+    public JumpState jumping {get; set;}
+    public LeaveState leaving {get; set;}
+    public SleepState sleeping {get; set;}
+    
+
     private void Awake() {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+
+
+        sc = new StateController();
+        idling = new IdleState(this, sc);
+        walking = new WalkState(this, sc);
+        jumping = new JumpState(this, sc);
+        leaving = new LeaveState(this, sc);
+        sleeping = new SleepState(this, sc);
+
     }
 
     void Start() {
@@ -39,13 +59,18 @@ public class BasicMovement : MonoBehaviour
 
         transform.position = GameObject.Find("GeneratePoints").transform.position;
         SetCountText();
+
+
+
+        sc.Initialize(idling);
+
     }
 
     void SetCountText() {
         switch_count_text.text = "Switch Count:" + ISceneManager._instance.load_count.ToString();
     }
 
-    void GroundMovement() {
+    public void GroundMovement() {
         float horizontalMove = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(horizontalMove * speed, rb.velocity.y);
 
@@ -54,7 +79,7 @@ public class BasicMovement : MonoBehaviour
         }
     }
 
-    bool GroundCheck() {
+    public bool GroundCheck() {
         Vector2 boxCenter = (Vector2) transform.position + (Vector2.down * playerSize.y * 0.5f);
 
         if(Physics2D.OverlapBox(boxCenter, boxSize, 0, ground) != null)
@@ -63,14 +88,14 @@ public class BasicMovement : MonoBehaviour
             return false;
     }
 
-    void Jump() {
+    public void Jump() {
         if(GroundCheck()) {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             AudioManager._instance.PlayJumpSound();
         }
     }
 
-    void SwitchAnim() {
+    public void SwitchAnim() {
         anim.SetFloat("running", Mathf.Abs(rb.velocity.x));
 
         if(GroundCheck()) {
@@ -96,14 +121,7 @@ public class BasicMovement : MonoBehaviour
         Vector3 targetPosition = target.position;
         UIposition.position = targetPosition + offset;
         
-        if (Input.GetButtonDown("Jump") && GroundCheck() && can_move) 
-            Jump();
 
-        if (can_move) {
-            GroundMovement();
-            SwitchAnim();
-        }
-        else
-            anim.SetBool("walkout", true);
+        sc.CurrentCharactorState.FrameUpdate();
     }
 }

@@ -9,7 +9,7 @@ public class SceneLoader : MonoBehaviour
     public bool inarea;
     public Animator animator;
     public GameObject text;
-    public BasicMovement player;
+    public PlayerController player;
     public AudioSource walkin;
 
     // // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class SceneLoader : MonoBehaviour
     {
         animator.SetBool("FadeIn", false);
         animator.SetBool("FadeOut", true);
-        player = GameObject.Find("Cat").GetComponent<BasicMovement>();
+        player = GameObject.Find("Cat").GetComponent<PlayerController>();
         
     }
 

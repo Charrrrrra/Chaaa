@@ -464,10 +464,10 @@ GameObject:
   m_Component:
   - component: {fileID: 193937443}
   - component: {fileID: 193937442}
-  - component: {fileID: 193937441}
   - component: {fileID: 193937440}
   - component: {fileID: 193937439}
   - component: {fileID: 193937438}
+  - component: {fileID: 193937444}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Player
@@ -542,29 +542,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &193937441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193937437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556360ed734f43947bea6052aa105d2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 193937440}
-  speed: 1.5
-  jumpForce: 5
-  groundCheck: {fileID: 775386273}
-  ground:
-    serializedVersion: 2
-    m_Bits: 72
-  boxHeight: 0.5
-  can_move: 0
-  switch_count_text: {fileID: 1251148771}
-  UIposition: {fileID: 1251148770}
 --- !u!212 &193937442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -632,6 +609,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &193937444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193937437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2683a9849355e81418e930975b03feda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 193937440}
+  speed: 1
+  jumpForce: 5
+  groundCheck: {fileID: 193937443}
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  boxHeight: 0.5
+  can_move: 0
+  switch_count_text: {fileID: 1251148771}
+  UIposition: {fileID: 133892150}
 --- !u!1 &197499748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,7 +1787,7 @@ MonoBehaviour:
   inarea: 0
   animator: {fileID: 1133079810}
   text: {fileID: 1220754969}
-  player: {fileID: 193937441}
+  player: {fileID: 0}
   walkin: {fileID: 1459518580}
 --- !u!224 &1459518579
 RectTransform:

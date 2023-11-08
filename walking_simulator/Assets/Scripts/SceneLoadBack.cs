@@ -9,13 +9,13 @@ public class SceneLoadBack : MonoBehaviour
     public bool inarea;
     public Animator animator;
     public GameObject text;
-    public BasicMovement player;
+    public PlayerController player;
     public AudioSource walkin;
 
     void Start() {
         animator.SetBool("FadeIn", false);
         animator.SetBool("FadeOut", true);
-        player = GameObject.Find("Cat").GetComponent<BasicMovement>();
+        player = GameObject.Find("Cat").GetComponent<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
