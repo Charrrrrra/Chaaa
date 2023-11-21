@@ -21,7 +21,7 @@ public class WalkState : CharactorState
             player.sc.ChangeState(player.jumping);
         }
         
-        if (!Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.D)) {
+        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
             player.sc.ChangeState(player.idling);
         }
         
