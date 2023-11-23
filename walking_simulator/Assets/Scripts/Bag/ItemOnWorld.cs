@@ -17,10 +17,12 @@ public class ItemOnWorld : MonoBehaviour
     private void AddNewItem() {
         if (!playerInventory.itemList.Contains(thisItem)) {
             playerInventory.itemList.Add(thisItem);
-            BagManager.CreateNewItem(thisItem);
+            // BagManager.CreateNewItem(thisItem);
         }
         else {
             thisItem.itemHeld++;
         }
+
+        BagManager.RefreshItem();
     }
 }
