@@ -59,7 +59,10 @@ public class BagManager : MonoBehaviour
         }
 
         for(int i = 0; i < _instance.bag_Inventory.itemList.Count; ++i) {
-            CreateNewItem(_instance.bag_Inventory.itemList[i]);
+            if (_instance.bag_Inventory.itemList[i].itemHeld == 0)
+                continue;
+            else
+                CreateNewItem(_instance.bag_Inventory.itemList[i]);
         }
     }
 
