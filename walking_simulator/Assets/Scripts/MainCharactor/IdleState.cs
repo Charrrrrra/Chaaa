@@ -7,6 +7,8 @@ public class IdleState : CharactorState
     public IdleState(PlayerController Player, StateController Sc) : base(Player, Sc) {}
 
     public override void EnterState() {
+        
+        Debug.Log("idling");
     }
 
     public override void ExitState() {

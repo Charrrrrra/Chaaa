@@ -8,6 +8,7 @@ public class WalkState : CharactorState
     public WalkState(PlayerController Player, StateController Sc) : base(Player, Sc) {}
 
     public override void EnterState() {
+        Debug.Log("Walking");
     }
 
     public override void ExitState() {

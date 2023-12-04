@@ -8,6 +8,8 @@ public class JumpState : CharactorState
 
     public override void EnterState() {
         base.EnterState();
+        
+        Debug.Log("Jumping");
     }
 
     public override void ExitState() {

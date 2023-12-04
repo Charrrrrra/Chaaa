@@ -25,9 +25,6 @@ public class PlayerController : MonoBehaviour
     Vector3 velocity = Vector3.zero;
     private Vector3 offset = new Vector3(0.08f, 0.2f, 0f);
 
-
-
-
     public StateController sc {get; set;}
     public WalkState walking {get; set;}
     public IdleState idling {get; set;}
@@ -80,12 +77,23 @@ public class PlayerController : MonoBehaviour
     }
 
     public bool GroundCheck() {
-        Vector2 boxCenter = (Vector2) transform.position + (Vector2.down * playerSize.y * 0.5f);
 
-        if(Physics2D.OverlapBox(boxCenter, boxSize, 0, ground) != null)
+        Vector2 boxCenter = (Vector2) transform.position + (Vector2.down * playerSize.y * 0.5f);
+        Collider2D colliderBox = Physics2D.OverlapBox(boxCenter, boxSize, 0, ground);
+        ContactPoint2D[] contactPoints = new ContactPoint2D[10];
+        
+        if(colliderBox == null) return false;
+
+        if(colliderBox.GetContacts(contactPoints) != 0) {
             return true;
-        else
+        }
+        else {
             return false;
+        }
+
+        // return Physics.Raycast(transform.position, Vector2.down, 20.0f);
+
+        // return Physics.OverlapSphereNonAlloc(transform.position, 0.15f, colliders, ground) != 0;
     }
 
     public void Jump() {
@@ -124,4 +132,9 @@ public class PlayerController : MonoBehaviour
 
         sc.CurrentCharactorState.FrameUpdate();
     }
+
+    // private void OnDrawGizmosSelected() {
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawWireSphere(transform.position, 0.15f);
+    // }
 }

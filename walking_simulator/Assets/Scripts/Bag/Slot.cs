@@ -26,12 +26,12 @@ public class Slot : MonoBehaviour
 
     public void ItemOnClicked() {
         if (slotItem.itemHeld > 1) {
-            slotItem.itemHeld--;
+            slotItem.ItemUse();
             slotNum.text = slotItem.itemHeld.ToString();
         }
             
         else {
-            slotItem.itemHeld--;
+            slotItem.ItemUse();
             foreach(Transform child in transform) {             
                 GameObject.Destroy(child.gameObject);
             }
